@@ -76,6 +76,8 @@ function App() {
   /* -------------------------- */
   /* START : useCallback here   */
   /* -------------------------- */
+  // ✅ Use useCallback for functions that are passed as props to child components (to prevent unnecessary child re-renders).
+  // ✅ Use useCallback when dealing with lists or API calls (like deleting an item).
   const handleDeleteUser = useCallback((id) => {
     axios
       .delete(`${URL}/${id}`)
@@ -86,6 +88,7 @@ function App() {
   /* END   : useCallback here   */
   /* -------------------------- */
 
+  // ❌ Avoid useCallback when functions are used locally inside the same component (like handleEditUser).
   function handleEditUser(user) {
     setIsVisible(false);
     setUser({
