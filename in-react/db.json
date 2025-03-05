@@ -1,29 +1,9 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "John Doe",
-      "email": "john@example.com"
-    },
-    {
-      "name": "John Wick",
-      "email": "john@wick.com",
-      "id": "ffbc"
-    },
-    {
-      "name": "Rohit Kumar ",
-      "email": "rohit@singh.com",
-      "id": "f6ef"
-    },
-    {
-      "name": "John Wick",
-      "email": "john@wick.com",
-      "id": "e60a"
-    },
-    {
+      "id": "d2cf",
       "name": "Ricky",
-      "email": "ricky@gmail.com",
-      "id": "55e3"
+      "email": "ricky@gmail.com"
     }
   ]
 }
