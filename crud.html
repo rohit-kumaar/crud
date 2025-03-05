@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <style>
+      th,
+      td {
+        padding: 5px 25px;
+        border: 1px solid #000;
+      }
+      button {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input id="name" type="text" placeholder="Enter your name" />
+      <input id="email" type="text" placeholder="Enter your email" />
+      <button id="addBtn" onclick="addTask()">Add</button>
+      <button id="updateBtn" onclick="updateUser()" style="display: none">
+        Update
+      </button>
+    </div>
+
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tBody">
+        <tr>
+          <td>Rohit Kumar</td>
+          <td>rohit@gmail.com</td>
+          <td><button>Edit</button><button>Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      /* ------------------------ */
+      /* START : DOMContentLoad   */
+      /* ------------------------ */
+      document.addEventListener("DOMContentLoad", showUser());
+      /* ------------------------ */
+      /* END   : DOMContentLoad   */
+      /* ------------------------ */
+
+      let selectedIndex = -1;
+
+      /* ---------------- */
+      /* START : add task */
+      /* ---------------- */
+      function addTask() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (name === "" || email === "") {
+          alert("Fill the blank space");
+          return;
+        }
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        users.push({ name, email });
+        localStorage.setItem("users", JSON.stringify(users));
+
+        showUser();
+        clearField();
+      }
+      /* ---------------- */
+      /* END   : add task */
+      /* ---------------- */
+
+      /* ----------------- */
+      /* START : show task */
+      /* ----------------- */
+      function showUser() {
+        const users = JSON.parse(localStorage.getItem("users"));
+        const tBody = document.getElementById("tBody");
+        tBody.innerHTML = "";
+
+        users.forEach((user, index) => {
+          let html = ` <tr>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <button onclick="editUser(${index})">Edit</button>
+                                <button onclick="deleteUser(${index})">Delete</button>
+                            </td>
+                        </tr>`;
+
+          tBody.innerHTML += html;
+        });
+      }
+      /* ----------------- */
+      /* END   : show task */
+      /* ----------------- */
+
+      /* -------------------- */
+      /* START : clear field  */
+      /* -------------------- */
+      function clearField() {
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+
+        name.value = "";
+        email.value = "";
+      }
+      /* -------------------- */
+      /* END   : clear field  */
+      /* -------------------- */
+
+      /* --------------------- */
+      /* START : delete user   */
+      /* --------------------- */
+      function deleteUser(index) {
+        const users = JSON.parse(localStorage.getItem("users"));
+        users.splice(index, 1);
+        localStorage.setItem("users", JSON.stringify(users));
+        showUser();
+      }
+      /* --------------------- */
+      /* END   : delete user   */
+      /* --------------------- */
+
+      /* ------------------ */
+      /* START : edit user  */
+      /* ------------------ */
+      function editUser(index) {
+        const users = JSON.parse(localStorage.getItem("users"));
+        document.getElementById("name").value = users[index].name;
+        document.getElementById("email").value = users[index].email;
+
+        document.getElementById("addBtn").style.display = "none";
+        document.getElementById("updateBtn").style.display = "inline-block";
+        selectedIndex = index;
+      }
+      /* ------------------ */
+      /* END   : edit user  */
+      /* ------------------ */
+
+      /* --------------------- */
+      /* START : update users */
+      /* --------------------- */
+      function updateUser() {
+        const users = JSON.parse(localStorage.getItem("users"));
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        users[selectedIndex] = { name, email };
+
+        localStorage.setItem("users", JSON.stringify(users));
+
+        showUser();
+        clearField();
+
+        const updateBtn = document.getElementById("updateBtn");
+        updateBtn.style.display = "none";
+
+        const addBtn = document.getElementById("addBtn");
+        addBtn.style.display = "inline-block";
+      }
+      /* --------------------- */
+      /* END   : update users */
+      /* --------------------- */
+    </script>
+  </body>
+</html>
