@@ -1,0 +1,9 @@
+th,
+td {
+  border: 1px solid #000;
+  padding-inline: 20px;
+}
+
+button {
+  cursor: pointer;
+}
